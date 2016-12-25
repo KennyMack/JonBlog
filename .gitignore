@@ -107,6 +107,7 @@ fabric.properties
 
 ### Bower ###
 bower_components
+bower_modules
 .bower-cache
 .bower-registry
 .bower-tmp
@@ -121,3 +122,6 @@ build/
 .tmp/
 
 # End of https://www.gitignore.io/api/node,jetbrains,bower,grunt
+
+certificates/
+*.env

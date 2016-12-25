@@ -2,7 +2,7 @@ module.exports = function(grunt) {
   var appcfg = {
     app: __dirname,
     src: 'src',
-    build: 'build' 
+    build: 'build'
   };
 
 
@@ -10,11 +10,20 @@ module.exports = function(grunt) {
     appcfg: appcfg,
     // Clean Files to build
     clean: {
-      main: {
+      api: {
         files: [{
           dot: true,
           src: [
-            '<%= appcfg.build %>/{,*/}*',
+            '<%= appcfg.build %>/server/{,*/}*',
+            '!<%= appcfg.build %>/.git{,*/}*'
+          ]
+        }]
+      },
+      client: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= appcfg.build %>/client/{,*/}*',
             '!<%= appcfg.build %>/.git{,*/}*'
           ]
         }]
@@ -34,18 +43,45 @@ module.exports = function(grunt) {
             'server/{,*/}*.js'
           ]
         }]
+      },
+      client: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= appcfg.src %>',
+          dest: '<%= appcfg.build %>',
+          src: [
+            'client/*.html',
+            'client/{,*/}*.html'
+          ]
+        }]
+      }
+    },
+    wiredep: {
+      target: {
+        src: [
+          '<%= appcfg.build %>/client/index.html'
+        ]
       }
     }
   };
-  console.log(file);
 
   grunt.initConfig(file);
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-wiredep');
 
-  grunt.registerTask('default', [
-    'clean:main', 
+  grunt.registerTask('api', [
+    'clean:api',
     'copy:api'
   ]);
+
+  grunt.registerTask('client', [
+    'clean:client',
+    'copy:client',
+    'wiredep'
+
+  ]);
+
 };
