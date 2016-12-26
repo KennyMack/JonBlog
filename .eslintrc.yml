@@ -18,3 +18,5 @@ rules:
     - always
   no-unused-vars:
     - warn
+  no-console:
+    - warn

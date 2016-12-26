@@ -41,8 +41,10 @@ module.exports = function(grunt) {
           dest: '<%= appcfg.build %>',
           src: [
             'server/*.js',
+            'server/modules/**',
             'server/bin/www',
-            'server/{,*/}*.js'
+            'server/{,*/}*.js',
+            'server/.env'
           ]
         }]
       },

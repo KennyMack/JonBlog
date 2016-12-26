@@ -1,53 +1,57 @@
 #!/usr/bin/env node
 
+'use strict';
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('jonblog:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('jonblog:server');
+const http = require('http');
+const config = require('../config');
+const db = require('../connection');
 
-/**
- * Get port from environment and store in Express.
- */
+var server = null;
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+config.loadEnv()
+  .then(function (result) {
+    console.log(result);
+    app.set('port', config.getPort());
+    return db.open();
+  })
+  .then(function(result) {
 
-/**
- * Create HTTP server.
- */
+    console.log('Conectado com sucesso.');
+    console.log('Iniciando o server.');
+    /**
+     * Create HTTP server.
+     */
+    server = http.createServer(app);
 
-var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    server.listen(config.getPort());
+    server.on('error', onError);
+    server.on('listening', onListening);
 
-/**
- * Normalize a port into a number, string, or false.
- */
+  })
+  .catch(function (err) {
+    if (err.code === 'ENOENT') {
+      console.log('Arquivo de configuração não encontrado.');
+      console.log('Deve ser criado na raiz do projeto com o nome ".env".');
+    }
+    else if (err.errno === -1945) {
+      console.log('Não foi possível conectar.');
+      console.log('Motivo: '+ err.message);
+    }
+    else
+      console.log(err);
+    process.exit();
+  })
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
 
 /**
  * Event listener for HTTP server "error" event.
@@ -59,8 +63,8 @@ function onError(error) {
   }
 
   var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    ? 'Pipe ' + config.getPort()
+    : 'Port ' + config.getPort();
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -77,6 +81,7 @@ function onError(error) {
   }
 }
 
+    
 /**
  * Event listener for HTTP server "listening" event.
  */
