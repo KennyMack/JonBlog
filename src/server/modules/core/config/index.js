@@ -1,8 +1,18 @@
 'use strict';
+/**
+ * Module Config
+ */
 
+
+/**
+ * Dependencies
+ */
 const fs = require('fs');
 
-// return default port
+/**
+ * return default port
+ * @return {number} Port number
+ */
 function getPort() {
   let port = process.env.PORT || 3000;
 
@@ -13,27 +23,42 @@ function getPort() {
   return port;
 }
 
-// return mongo url
+/**
+ * return mongo url
+ * @return {String} Path to Mongo
+ */
 function getDbUrl() {
   return process.env.MONGO_DB || 'mongodb://localhost:27017/jonblog';
 }
 
-// return default date format
+/**
+ * return default date format
+ * @return {String} Date Format
+ */
 function getDateFormat() {
   return process.env.DATE_FORMAT || 'DD/MM/YYYY';
 }
 
-// return default date time format
+/**
+ * return default date time format
+ * @return {String} DateTime format
+ */
 function getDateTimeFormat() {
   return process.env.DATE_TIME_FORMAT || 'DD/MM/YYYY HH:mm:ss';
 }
 
-// return secret key
+/**
+ * return secret key
+ * @return {String} Secret Key
+ */
 function getSecret() {
   return process.env.SECRET || '123456';
 }
 
-// load env vars
+/**
+ * load env vars
+ * @return {Promise} Resolve/Reject
+ */
 function loadEnv() {
   return new Promise(function(resolve, reject) {
     let path = require('path');
@@ -57,6 +82,10 @@ function loadEnv() {
   });
 }
 
+/**
+ * Module Export
+ * @type {Object}
+ */
 module.exports = {
   loadEnv: loadEnv,
   getPort: getPort,

@@ -4,12 +4,13 @@
 /**
  * Module dependencies.
  */
+import core from '../modules/core';
 
 const app = require('../app');
 const debug = require('debug')('jonblog:server');
 const http = require('http');
-const config = require('../config');
-const db = require('../connection');
+const config = core.config;
+const db = core.connection;
 
 var server = null;
 
@@ -81,7 +82,7 @@ function onError(error) {
   }
 }
 
-    
+
 /**
  * Event listener for HTTP server "listening" event.
  */

@@ -1,8 +1,20 @@
 'use strict';
+/**
+ * Module article
+ */
 
-const db = require('../../connection');
-const date = require('../../date');
 
+/**
+ * Dependencies
+ */
+import core from '../core';
+const date = core.date;
+const db = core.connection;
+
+/**
+ * Article Schema Definition
+ * @type {Schema}
+ */
 const articleSchema = new db.mongoose.Schema({
   username: {
     type: db.types.ObjectId,
@@ -34,4 +46,8 @@ const articleSchema = new db.mongoose.Schema({
   }
 });
 
+/**
+ * Module Export
+ * @type {Object}
+ */
 module.exports.articleSchema = articleSchema;
