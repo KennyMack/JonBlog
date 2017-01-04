@@ -63,7 +63,7 @@ function loadEnv() {
   return new Promise(function(resolve, reject) {
     let path = require('path');
     let local = path.dirname(module.parent.filename);
-    local = path.resolve(path.join(local, '../'));
+    local = path.resolve(path.join(local, '../../../'));
     fs.readFile(local + '/.env', 'utf-8', function(err, data) {
       if (err) {
         reject(err);

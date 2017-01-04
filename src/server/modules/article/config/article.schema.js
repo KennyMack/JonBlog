@@ -7,7 +7,7 @@
 /**
  * Dependencies
  */
-import core from '../core';
+const core = require('../../core');
 const date = core.date;
 const db = core.connection;
 
@@ -30,7 +30,7 @@ const articleSchema = new db.mongoose.Schema({
   modified_at: {
     type: Date,
     required: true,
-    default: date.getCurrentDateTime()
+    default: date.getDateTimeNow()
   },
   title: {
     type: String,

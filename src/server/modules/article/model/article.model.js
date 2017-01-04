@@ -6,8 +6,8 @@
 /**
  * Dependencies
  */
-import core from '../core';
-import articleSchema from '../config/articleSchema';
+const core = require('../../core');
+const articleSchema = require('../config/article.schema');
 
 const db = core.connection;
 const config = core.config;

@@ -4,7 +4,7 @@
 /**
  * Module dependencies.
  */
-import core from '../modules/core';
+const core = require('../modules/core');
 
 const app = require('../app');
 const debug = require('debug')('jonblog:server');
